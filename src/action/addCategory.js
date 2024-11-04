@@ -15,7 +15,9 @@ export const addCategory = async (obj) => {
 
 export const getCategories = async () => {
   try {
-      let category = await fetch("http://localhost:3000/api/categories");
+      let category = await fetch(`${process.env.BASE_URI}api/categories`,{
+        cache : "no-cache"
+      });
       category = await category.json();
       console.log("Fetched Category Array:", category?.categories?.length);
       return category.categories;
