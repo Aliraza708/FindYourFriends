@@ -1,6 +1,6 @@
 "use client";
 import React, { useRef, useState } from "react";
-// import { useToast } from "@/hooks/use-toast";
+import { useToast } from "@/hooks/use-toast";
 import { cn } from "@/lib/utils";
 // import { useMediaQuery } from "@/hooks/use-media-query";
 import { Button } from "@/components/ui/button";
@@ -77,23 +77,29 @@ export function AddCategory() {
 }
 
 function ProfileForm({ className }) {
-//   const [loading, setLoading] = useState(false);
+  //   const [loading, setLoading] = useState(false);
   const formRef = useRef();
-//   const { toast } = useToast();
-  
+  const { toast } = useToast();
+
   const handleAddCategory = async (formData) => {
-    
+
     // console.log(thumbnailImage)
     const ThumbnailFile = await uploadImage(formData)
     const obj = {
-        title: formData.get("title"),
-        description: formData.get("description"),
-        thambnail: ThumbnailFile,
-      };
-      await addCategory(obj);
-      
+      title: formData.get("title"),
+      description: formData.get("description"),
+      thambnail: ThumbnailFile,
+    };
+    await addCategory(obj);
 
-    
+    toast({
+      title: "Category add successfully",
+    })
+     formRef?.current?.reset()
+
+
+
+
   };
   return (
     <form
@@ -124,8 +130,8 @@ function ProfileForm({ className }) {
         <Label htmlFor="thumbnail">Thumbnail</Label>
         <Input required name="thumbnail" type="file" />
       </div>
-      <Button type="submit"> 
-        submit
+      <Button type="submit">
+      Add Sub Category
 
       </Button>
     </form>

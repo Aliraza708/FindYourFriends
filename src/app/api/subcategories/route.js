@@ -5,11 +5,10 @@ export async function GET(request) {
     await connectDb()
  const resqUrl = request.url
  const {searchParams} = new URL(resqUrl)
- console.log("====>",searchParams)
 
  const query = {} ;
  if(searchParams.get("catgories")){
-    query.catgories  = searchParams.get("catgories")
+    query.catgories = searchParams.get("catgories")
  }
     const subcatgories = await SubCategoriesModels.find(query).populate("catgories","title")
     return Response.json({

@@ -19,7 +19,6 @@ export const getCategories = async () => {
         cache : "no-cache"
       });
       category = await category.json();
-      console.log("Fetched Category Array:", category?.categories?.length);
       return category.categories;
   } catch (error) {
       console.error("Error fetching categories:", error);

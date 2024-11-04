@@ -3,10 +3,10 @@ import { UserModels } from "@/lib/module/moduleUser"
 import NextAuth from "next-auth"
 import Google from "next-auth/providers/google"
 
-const handleUser = async (profile)=>{
+const handleUser = async (profile) => {
   await connectDb()
-  let user = await UserModels.findOne({email : profile.email})
-  if(user) return user
+  let user = await UserModels.findOne({ email : profile.email })
+  if (user) return user
   let newUser = new UserModels({
     fullName: profile.name,
     email: profile.email,
@@ -18,19 +18,19 @@ const handleUser = async (profile)=>{
 
 export const { handlers, signIn, signOut, auth } = NextAuth({
   providers: [Google],
- callbacks: {
+  callbacks: {
     async signIn({ account, profile }) {
 
-      console.log("profile",profile)
+      console.log("profile", profile)
       const user = handleUser(profile)
-      if (account.provider === "google") {
-        return profile.email_verified && profile.email.endsWith("@example.com")
-      }
+
+      profile.role = user.role;
+      profile._id = user._id;
       return true // Do different verification for other providers that don't have `email_verified`
     },
     jwt({ token, user }) {
-      console.log("token",token)
-      console.log("user",user)
+      console.log("token", token)
+      console.log("user", user)
       if (user) { // User is available during sign-in
         token.id = user.id
       }
@@ -41,5 +41,5 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
       return session
     },
   },
-  
+
 })

@@ -15,7 +15,6 @@ import {
 export default async function catgories() {
 
      const categories = await getCategories();
-    //  console.log("====>cat",categories)
 
     return (
         <div>

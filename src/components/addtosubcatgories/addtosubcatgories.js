@@ -41,7 +41,7 @@ export function AddSubCategory() {
                     <DialogHeader>
                         <DialogTitle>
                             Add Sub Category
-                            </DialogTitle>
+                        </DialogTitle>
                         <DialogDescription>
                             Make changes to your profile here. Click save when {`you're`}{" "}
                             done.
@@ -84,6 +84,7 @@ function ProfileForm({ className }) {
     const handleAddCategory = async (formData) => {
         console.log("formData=>", formData.get("title"));
 
+
     };
     return (
         <form
@@ -115,8 +116,7 @@ function ProfileForm({ className }) {
                 <Input required name="thumbnail" type="file" />
             </div>
             <Button type="submit">
-                submit
-
+                Add Sub Category
             </Button>
         </form>
     );
