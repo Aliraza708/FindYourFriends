@@ -8,16 +8,16 @@ export const addSubCategory = async (obj) => {
     body: JSON.stringify(obj),
   });
   if (added.ok) {
-    console.log("Category added successfully");
+    console.log("SubCategory added successfully");
     revalidatePath("/admin/subcategories");
   }
 };
 
-export const getSubCategories = async (Category) => {
+export const getSubCategories = async (category) => {
   try {
     let url;
-  if (Category) {
-    url = `${process.env.BASE_URI}api/subcategories?category=${Category}`;
+  if (category) {
+    url = `${process.env.BASE_URI}api/subcategories?catgories=${category}`;
   } else {
     url = `${process.env.BASE_URI}api/subcategories`;
   }
@@ -26,7 +26,6 @@ export const getSubCategories = async (Category) => {
     cache : "no-cache"
   });
     subcategories = await subcategories.json();
-    console.log(subcategories,"<====")
     return subcategories.subcatgories;
   } catch (error) {
       console.error("Error fetching subcategories:", error);

@@ -32,6 +32,8 @@ export default function CategoryDropDown({ Category }) {
                 <SelectValue placeholder="Select  Category" />
             </SelectTrigger>
             <SelectContent>
+            <SelectItem value={undefined}>All</SelectItem>
+
                 {Category?.map((data, index) => {
                     return (
                         <SelectItem key={index} value={data._id}>{data.title}</SelectItem>

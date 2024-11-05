@@ -23,7 +23,7 @@ export default async function subcatgories({searchParams}) {
                  <h1 className="font-bold text-2xl pl-6 p-2">Subcatgories</h1>
                  <div className="flex gap-3">
                      <CategoryDropDown Category={categories}/>
-                 <AddSubCategory/>
+                 <AddSubCategory categories ={categories}/>
                  </div>
                 
             </div>

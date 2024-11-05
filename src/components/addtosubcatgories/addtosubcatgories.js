@@ -22,12 +22,22 @@ import {
     DrawerTitle,
     DrawerTrigger,
 } from "@/components/ui/drawer";
+import {
+    Select,
+    SelectContent,
+    SelectItem,
+    SelectTrigger,
+    SelectValue,
+} from "@/components/ui/select"
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { uploadImage } from "@/action/uploadImage";
+import { addSubCategory } from "@/action/addtosubcategory";
+import { useToast } from "@/hooks/use-toast";
 // import { uploadImage } from "@/actions/upload";
 // import { addCategory } from "@/actions/categories";
 
-export function AddSubCategory() {
+export function AddSubCategory({categories}) {
     const [open, setOpen] = useState(false);
     const isDesktop = true;
 
@@ -47,7 +57,7 @@ export function AddSubCategory() {
                             done.
                         </DialogDescription>
                     </DialogHeader>
-                    <ProfileForm />
+                    <ProfileForm  categories={categories} />
                 </DialogContent>
             </Dialog>
         );
@@ -76,15 +86,25 @@ export function AddSubCategory() {
     );
 }
 
-function ProfileForm({ className }) {
-    //   const [loading, setLoading] = useState(false);
+function ProfileForm({ className ,categories }) {
     const formRef = useRef();
-    //   const { toast } = useToast();
-
+    const { toast } = useToast();
+  
     const handleAddCategory = async (formData) => {
-        console.log("formData=>", formData.get("title"));
-
-
+        const ThumbnailFile = await uploadImage(formData)
+      const obj = {
+        title: formData.get("title"),
+        description: formData.get("description"),
+        catgories: formData.get("category"),
+        thambnail: ThumbnailFile,
+      };
+   
+      await addSubCategory(obj);
+  
+      toast({
+        title: "Add Sub Category add successfully",
+      })
+       formRef?.current?.reset()
     };
     return (
         <form
@@ -115,6 +135,25 @@ function ProfileForm({ className }) {
                 <Label htmlFor="thumbnail">Thumbnail</Label>
                 <Input required name="thumbnail" type="file" />
             </div>
+            <div className="grid gap-2">
+            <Select name="category">
+            <SelectTrigger className="w-full">
+                <SelectValue placeholder="Select  Category" />
+            </SelectTrigger>
+            <SelectContent>
+
+                {categories?.map((data, index) => {
+                    return (
+                        <SelectItem key={index} value={data._id}>{data.title}</SelectItem>
+
+                    )
+
+                })}
+
+            </SelectContent>
+        </Select>
+            </div>
+
             <Button type="submit">
                 Add Sub Category
             </Button>
