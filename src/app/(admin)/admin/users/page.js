@@ -1,3 +1,4 @@
+import { getUsers } from "@/action/Users"
 import {
     Table,
     TableBody,
@@ -7,38 +8,20 @@ import {
     TableHeader,
     TableRow,
 } from "@/components/ui/table"
-import Image from "next/image"
+// import Image from "next/image"
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 
-export default function users() {
+export default async function users() {
 
-    const User = [
-        {
-            fullName : 'aliraza',
-            email : 'aliraza@gmail.com',
-            location : "Karachi",
-            events : 5,
-            profileImage : 'https://images.unsplash.com/photo-1704726135027-9c6f034cfa41?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8OHx8dXNlciUyMHByb2ZpbGV8ZW58MHx8MHx8fDA%3D'
-        },
-        {
-            fullName : 'raza',
-            email : 'raza@gmail.com',
-            location : "Karachi",
-            events : 5,
-            profileImage : 'https://images.unsplash.com/photo-1704726135027-9c6f034cfa41?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8OHx8dXNlciUyMHByb2ZpbGV8ZW58MHx8MHx8fDA%3D'
-        },      {
-            fullName : 'ali',
-            email : 'ali@gmail.com',
-            location : "Karachi",
-            events : 5,
-            profileImage : 'https://images.unsplash.com/photo-1704726135027-9c6f034cfa41?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8OHx8dXNlciUyMHByb2ZpbGV8ZW58MHx8MHx8fDA%3D'
-        }
-    ]
+    const User = await getUsers()
+    console.log("User===<", User)
+
 
     return (
         <div>
-            
+
             <h1 className="font-bold text-2xl pl-6 p-2">Users</h1>
-            <div className ='p-4'>
+            <div className='p-4'>
                 <Table >
                     <TableCaption>A list of your recent Users.</TableCaption>
                     <TableHeader>
@@ -53,7 +36,12 @@ export default function users() {
                     <TableBody>
                         {User.map((user) => (
                             <TableRow key={user.fullName}>
-                                <TableCell ><Image width={40} height={40} src={user.profileImage} alt={user.fullName}/></TableCell>
+                                <TableCell >
+                                    <Avatar>
+                                        <AvatarImage src={user.profileImage} alt={user._id}/>
+                                        <AvatarFallback>CN</AvatarFallback>
+                                    </Avatar>
+                                    </TableCell>
                                 <TableCell >{user.fullName}</TableCell>
                                 <TableCell>{user.email}</TableCell>
                                 <TableCell >{user.location}</TableCell>
@@ -61,9 +49,9 @@ export default function users() {
                             </TableRow>
                         ))}
                     </TableBody>
-                
+
                 </Table>
-                
+
 
             </div>
         </div>

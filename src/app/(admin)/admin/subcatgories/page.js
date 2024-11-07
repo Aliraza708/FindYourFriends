@@ -43,7 +43,7 @@ export default async function subcatgories({searchParams}) {
                     <TableBody>
                         {subcategories?.map((subcatgories) => (
                             <TableRow key={subcatgories._id}>
-                                <TableCell ><Image width={60} height={60} src={subcatgories.thambnail} alt={subcatgories.title}/></TableCell>
+                                <TableCell ><img width={60} height={60} src={subcatgories.thambnail} alt={subcatgories.title}/></TableCell>
                                 <TableCell className='w-32' >{subcatgories.catgories.title}</TableCell>
                                 <TableCell className='w-36' >{subcatgories.title}</TableCell>
                                 <TableCell>{subcatgories.description}</TableCell>

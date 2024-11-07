@@ -16,30 +16,32 @@ const handleUser = async (profile) => {
   return newUser
 }
 
-export const { handlers, signIn, signOut, auth } = NextAuth({
+export  const { handlers, signIn, signOut, auth } = NextAuth({
   providers: [Google],
   callbacks: {
     async signIn({ account, profile }) {
 
-      // console.log("profile", profile)
-      const user = handleUser(profile)
+      const user =  handleUser(profile)
 
       profile.role = user.role;
       profile._id = user._id;
-      return true // Do different verification for other providers that don't have `email_verified`
+      return true
     },
-    jwt({ token, user }) {
+     jwt({ token, user }) {
       console.log("token", token)
       console.log("user", user)
-      if (user) { // User is available during sign-in
+      if (user) { 
         token.id = user.id
       }
       return token
     },
     session({ session, token }) {
-      session.user.id = token.id
+      session.user.id = token.id;
+      session.user._id = token._id;
+      session.user.role = token.role;
       return session
     },
   },
 
 })
+ 
